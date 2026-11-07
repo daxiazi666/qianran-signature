@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#f5f7fa">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="签然，免费在线电子签名工具。用手机、鼠标或触控笔写下名字，下载高清透明底或白底 PNG 签名。无需注册，签名仅在本机生成。">
+  <meta property="og:title" content="签然 · 免费电子签名">
+  <meta property="og:description" content="打开就能写，写好就能下载。用你自己的笔迹，签下名字。">
+  <title>签然 · 免费电子签名</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./signature-core.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="i-pen" viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l5-1L20 8a2.8 2.8 0 0 0-4-4L5 15l-1 5Z"/><path d="m5 15 4 4M4 20H2"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/></symbol>
+      <symbol id="i-undo" viewBox="0 0 24 24"><path d="m8 4-5 5 5 5M3 9h10a7 7 0 0 1 0 14" transform="translate(0 -2)"/></symbol>
+      <symbol id="i-redo" viewBox="0 0 24 24"><path d="m16 4 5 5-5 5m5-5H11a7 7 0 0 0 0 14" transform="translate(0 -2)"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3m-4 4 4-4 4 4M5 12v9h14v-9"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-1 .5-1 1.2-1 1.7M12 16h.01"/></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0m0 2 1-1a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0" transform="translate(2 0)"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header page-width">
+    <a class="brand" href="./" aria-label="签然首页"><span class="brand-mark"><svg><use href="#i-pen"/></svg></span><span>签然<span class="brand-sub">在线签名</span></span></a>
+    <nav aria-label="主导航"><a class="nav-active" href="#workspace">签名工作台</a><a href="#guide">使用指南</a></nav>
+    <button id="copy-link" class="share-site"><svg class="icon"><use href="#i-link"/></svg><span>分享工具</span></button>
+  </header>
+
+  <main class="page-width">
+    <section class="intro" aria-labelledby="main-title">
+      <div><div class="intro-note"><span></span>免费使用，无需注册</div><h1 id="main-title">好签名，亲手写。</h1><p>把你的笔迹，变成随时可用的电子签名。</p></div>
+      <div class="intro-stamp" aria-hidden="true"><svg viewBox="0 0 210 88"><path d="M17 54c17-22 36-36 43-33 9 5-29 39-24 44 4 3 41-39 48-37 9 2-27 31-18 35 6 2 30-31 38-28 5 2-15 22-8 24 7 3 22-14 28-12 4 2-7 12 0 12 10 1 22-11 31-13m-126 29c32-10 93-10 151-21"/></svg><span>每一笔，都属于你</span></div>
+    </section>
+
+    <section id="workspace" class="workspace" aria-label="签名工作台">
+      <div class="writing-card">
+        <div class="board-header"><div class="board-title"><h2>签名板</h2><span class="desktop-hint">用手指、鼠标或触控笔自由书写</span></div><div class="history-actions"><button id="undo" class="icon-button" title="撤销 (Ctrl / ⌘ + Z)" aria-label="撤销上一笔" disabled><svg class="icon"><use href="#i-undo"/></svg></button><button id="redo" class="icon-button" title="重做 (Ctrl / ⌘ + Shift + Z)" aria-label="重做上一笔" disabled><svg class="icon"><use href="#i-redo"/></svg></button><span class="small-divider"></span><button id="clear" class="clear-button" disabled><svg class="icon"><use href="#i-trash"/></svg><span>清空</span></button></div></div>
+        <div class="canvas-area" id="canvas-area">
+          <div class="paper-corner corner-tl" aria-hidden="true"></div><div class="paper-corner corner-tr" aria-hidden="true"></div><div class="paper-corner corner-bl" aria-hidden="true"></div><div class="paper-corner corner-br" aria-hidden="true"></div>
+          <div id="canvas-placeholder" class="canvas-placeholder" aria-hidden="true"><span class="sample-name">你的名字</span><span class="placeholder-caption"><svg class="icon"><use href="#i-pen"/></svg>从这里，写下第一笔</span></div>
+          <div class="signature-guide" aria-hidden="true"></div>
+          <canvas id="signature-canvas" aria-label="签名书写区域，请使用手指、鼠标或触控笔书写" role="img">你的浏览器不支持签名画布，请使用新版浏览器。</canvas>
+          <span class="paper-label" aria-hidden="true">自由书写区</span>
+        </div>
+        <div class="pen-toolbar">
+          <fieldset class="color-controls"><legend class="sr-only">选择笔迹颜色</legend><span class="toolbar-label" aria-hidden="true">笔色</span><button class="color-choice selected" data-color="#202c3b" style="--ink:#202c3b" aria-label="墨黑色" aria-pressed="true"><span></span></button><button class="color-choice" data-color="#235e9e" style="--ink:#235e9e" aria-label="钢笔蓝色" aria-pressed="false"><span></span></button><button class="color-choice" data-color="#276654" style="--ink:#276654" aria-label="松绿色" aria-pressed="false"><span></span></button><button class="color-choice" data-color="#b24a4e" style="--ink:#b24a4e" aria-label="朱红色" aria-pressed="false"><span></span></button></fieldset>
+          <span class="toolbar-divider"></span>
+          <fieldset class="width-controls"><legend class="sr-only">选择笔迹粗细</legend><span class="toolbar-label" aria-hidden="true">粗细</span><button class="width-choice" data-width="2" aria-label="细笔，2 像素" aria-pressed="false"><span style="height:2px"></span></button><button class="width-choice selected" data-width="3.5" aria-label="中笔，3.5 像素" aria-pressed="true"><span style="height:3.5px"></span></button><button class="width-choice" data-width="5.5" aria-label="粗笔，5.5 像素" aria-pressed="false"><span style="height:5.5px"></span></button></fieldset>
+          <span class="board-status" id="board-status">等待落笔</span>
+        </div>
+        <div class="board-footnote"><svg class="icon"><use href="#i-shield"/></svg>你的签名仅在此设备处理，不会上传<span class="keyboard-tip">撤销 <kbd>Ctrl</kbd> + <kbd>Z</kbd></span></div>
+      </div>
+
+      <aside class="export-card" aria-labelledby="export-title">
+        <div class="export-heading"><span class="tiny-pen"><svg class="icon"><use href="#i-pen"/></svg></span><div><h2 id="export-title">把签名带走</h2><p>写好之后，下载就好。</p></div></div>
+        <div class="preview-header"><span>效果预览</span><span class="format-tag">PNG 图片</span></div>
+        <div id="preview-wrap" class="signature-preview checkerboard"><canvas id="preview-canvas" width="700" height="320" aria-label="签名图片实时预览"></canvas><span id="preview-placeholder">你的签名会出现在这里</span></div>
+        <fieldset class="background-field"><legend>图片背景</legend><div class="segmented"><button id="bg-transparent" class="selected" aria-pressed="true"><span class="checker-swatch"></span>透明底</button><button id="bg-white" aria-pressed="false"><span class="white-swatch"></span>白底</button></div></fieldset>
+        <label class="crop-option"><input type="checkbox" id="crop" checked><span>自动裁去周围空白</span><span class="crop-hint" title="只保留笔迹区域，四周留出适当边距">推荐</span></label>
+        <div class="export-info"><span>高清 PNG</span><span id="export-size">保留原始笔迹</span></div>
+        <button id="download" class="download-button" disabled><svg class="icon"><use href="#i-arrow"/></svg><span>下载签名</span></button>
+        <p class="download-hint" id="download-hint">先在签名板上写下你的名字</p>
+      </aside>
+    </section>
+
+    <div class="reassurance"><span><svg class="icon"><use href="#i-check"/></svg>免费使用</span><span><svg class="icon"><use href="#i-check"/></svg>无需登录</span><span><svg class="icon"><use href="#i-check"/></svg>手机电脑都能用</span><span><svg class="icon"><use href="#i-check"/></svg>签名不上传</span></div>
+
+    <section id="guide" class="guide-section" aria-labelledby="guide-title"><div class="guide-intro"><span class="guide-icon"><svg class="icon"><use href="#i-help"/></svg></span><h2 id="guide-title">一点小提示</h2><p>让你的签名更顺手。</p></div><div class="faq-list">
+      <details><summary>怎样写出更自然的签名？<span>+</span></summary><p>手机上用手指或触控笔，电脑上按住鼠标左键书写。慢一点落笔，一气呵成；不满意可以撤销后重写。手机横屏时，书写区域会更宽。书写过程中请将手指保持在签名板内。</p></details>
+      <details><summary>透明底和白底有什么区别？<span>+</span></summary><p>透明底适合放入 Word、PDF 或设计稿中，能自然融入文档背景；白底适合单独保存和打印。预览中的小方格只用于提示透明区域，不会出现在下载图片里。</p></details>
+      <details><summary>手机上怎样保存签名？<span>+</span></summary><p>写好后点击「下载签名」，图片会保存到浏览器的下载位置。如果没有出现下载提示，可以在弹出的预览里长按图片保存，或使用设备支持的分享功能。</p></details>
+      <details><summary>我的签名会被保存吗？<span>+</span></summary><p>笔迹和图片均在当前浏览器内处理，网站不会上传或保存你的签名。刷新或关闭页面会清空笔迹，离开前记得下载。</p></details>
+    </div></section>
+  </main>
+  <footer class="page-width site-footer"><span class="footer-brand">签然<span>让签名，简单一点。</span></span><span>打开即用，自在落笔。</span></footer>
+
+  <dialog id="download-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><div><span class="success-label"><svg class="icon"><use href="#i-check"/></svg>已生成高清图片</span><h2 id="dialog-title">你的签名，收好了。</h2></div><button id="close-dialog" class="icon-button" aria-label="关闭图片预览"><svg class="icon"><use href="#i-close"/></svg></button></div><div id="result-wrap" class="result-wrap checkerboard"><img id="result-image" alt="已生成的电子签名图片，可长按保存"></div><p class="save-instructions">下载已开始。手机若未显示下载提示，可长按图片保存。</p><div class="dialog-actions"><a id="save-again" class="download-button" download="我的签名.png"><svg class="icon"><use href="#i-arrow"/></svg>再次下载</a><button id="share-image" class="secondary-button" hidden><svg class="icon"><use href="#i-share"/></svg>分享图片</button></div><p class="dialog-privacy"><svg class="icon"><use href="#i-shield"/></svg>仅在你的设备生成，请妥善保管。</p></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><div class="noscript-message">请在浏览器中启用 JavaScript，才能书写和下载签名。</div></noscript>
+</body>
+</html>
